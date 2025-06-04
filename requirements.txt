@@ -1,0 +1,18 @@
+# Core
+fastapi
+uvicorn
+pymongo
+mysql-connector-python
+python-dotenv
+
+# NLP and ML (optional for later)
+spacy
+scikit-learn
+pandas
+numpy
+
+# API & Requests
+requests
+
+# Dev tools
+jupyter
