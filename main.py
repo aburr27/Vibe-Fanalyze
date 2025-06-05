@@ -12,6 +12,7 @@ app.include_router(stats.router)
 app.include_router(players.router)
 app.include_router(teams.router)
 app.include_router(games.router)  # new
+app.include_router(fantasy.router)
 
 # Health check or landing route
 @app.get("/", tags=["Root"])
