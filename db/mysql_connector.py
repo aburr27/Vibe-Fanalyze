@@ -6,5 +6,5 @@ def get_mysql_connection():
         host=settings.MYSQL_URL,
         user='root',
         password='your_password',
-        db='sportsbot'
+        db='sportsdb'
     )
