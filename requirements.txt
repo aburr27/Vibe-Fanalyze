@@ -4,6 +4,7 @@ uvicorn
 pymongo
 mysql-connector-python
 python-dotenv
+pymysql
 
 # NLP and ML (optional for later)
 spacy
