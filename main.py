@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from backend.routers import stats, players, teams, games  # Make sure this matches your folder structure
+from backend.routers import stats, players, teams, games, fantasy  # Make sure this matches your folder structure
 
 # Create FastAPI instance
 app = FastAPI(
