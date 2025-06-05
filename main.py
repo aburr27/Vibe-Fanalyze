@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from backend.routers import stats, players, teams  # Make sure this matches your folder structure
+from backend.routers import stats, players, teams, games  # Make sure this matches your folder structure
 
 # Create FastAPI instance
 app = FastAPI(
@@ -11,6 +11,7 @@ app = FastAPI(
 app.include_router(stats.router)
 app.include_router(players.router)
 app.include_router(teams.router)
+app.include_router(games.router)  # new
 
 # Health check or landing route
 @app.get("/", tags=["Root"])
