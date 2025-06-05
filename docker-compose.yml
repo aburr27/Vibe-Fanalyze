@@ -42,4 +42,6 @@ services:
 
 volumes:
   mongo_data:
-  mysql_data:
+  mysql_data: /var/lib/mysql
+  ./mysql/init.sql: /docker-entrypoint-initdb.d/init.sql
+
