@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from backend.routers import stats, players, teams, games, fantasy  # Make sure this matches your folder structure
+from backend.routes import fantasy
 
 # Create FastAPI instance
 app = FastAPI(
