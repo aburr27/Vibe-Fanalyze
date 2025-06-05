@@ -15,16 +15,3 @@ def get_fantasy_points(player_id: int):
     points = calculate_fantasy_points(stats, league)
     return {"player_id": player_id, "fantasy_points": points}
     
-@router.get("/team/{team_name}")
-def get_team_fantasy_points(team_name: str, league: str = "NBA"):
-    players = list(mongo_db.players.find({"team": team_name, "league": league}, {"_id": 0}))
-    if not players:
-        raise HTTPException(status_code=404, detail="No players found for team.")
-
-    total = sum(calculate_fantasy_points(p["stats"], league) for p in players)
-    return {
-        "team": team_name,
-        "league": league,
-        "fantasy_points_total": total,
-        "players": [{ "name": p["name"], "points": calculate_fantasy_points(p["stats"], league)} for p in players]
-    }
