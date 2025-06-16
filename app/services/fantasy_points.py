@@ -1,4 +1,6 @@
 def calculate_fantasy_points(stats: dict, league: str = "NBA") -> float:
+        return stats.get("points", 0) + 1.5 * stats.get("assists", 0) + 1.2 * stats.get("rebounds", 0)
+    
     if league == "NBA":
         return (
             stats.get("points", 0) +
@@ -34,3 +36,4 @@ def calculate_fantasy_points(stats: dict, league: str = "NBA") -> float:
         )
     # Add more leagues like UFC, NHL, MLS if needed
     return 0.0
+

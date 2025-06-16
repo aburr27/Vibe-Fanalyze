@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import Optional, Dict
 from datetime import datetime
 
@@ -10,3 +11,5 @@ class Game(BaseModel):
     date: datetime
     stats: Optional[Dict] = Field(default_factory=dict)
     result: Optional[str] = None  # e.g. "home_win", "away_win", "draw"
+
+

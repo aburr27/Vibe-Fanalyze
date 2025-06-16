@@ -1,8 +1,13 @@
 from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from backend.db.mongo_connector import mongo_db
 from backend.fantasy_points import calculate_fantasy_points
 
 router = APIRouter(prefix="/fantasy", tags=["Fantasy"])
+
+@router.get("/calculate")
+def calculate_points():
+    return {"fantasy_points": 100}
 
 @router.get("/player/{player_id}")
 def get_fantasy_points(player_id: int):
@@ -53,3 +58,4 @@ def get_game_fantasy_points(game_id: int):
         results[team].append({"team_total_points": team_total})
 
     return {"game_id": game_id, "league": league, "fantasy_summary": results}
+

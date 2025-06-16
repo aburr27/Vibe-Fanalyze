@@ -1,8 +1,13 @@
 from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from backend.db.mongo_connector import mongo_db
 from backend.models.player import Player
 
 router = APIRouter(prefix="/players", tags=["Players"])
+
+@router.get("/")
+def list_players():
+    return [{"id": 1, "name": "Player A"}]
 
 # Create
 @router.post("/")
