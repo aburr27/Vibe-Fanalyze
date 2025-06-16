@@ -1,8 +1,14 @@
 from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from backend.db.mongo_connector import mongo_db
 from backend.models.game import Game
+# app/routes/games.py
 
 router = APIRouter(prefix="/games", tags=["Games"])
+
+@router.get("/")
+def list_games():
+    return [{"game_id": 1, "home": "Team A", "away": "Team B"}]
 
 # Create
 @router.post("/")
@@ -35,3 +41,5 @@ def delete_game(game_id: int):
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Game not found.")
     return {"message": "Game deleted."}
+
+

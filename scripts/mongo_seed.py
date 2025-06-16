@@ -1,5 +1,9 @@
 from backend.db.mongo_connector import mongo_db
 
+# scripts/mongodb_seed.py
+chat_logs = mongo_db["chat_logs"]
+chat_logs.insert_one({"user_id": "seed_user", "message": "Hello World!"})
+
 # Leagues to seed
 leagues = [
     {"code": "NFL", "name": "National Football League"},

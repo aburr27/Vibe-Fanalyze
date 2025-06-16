@@ -1,8 +1,13 @@
 from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from backend.db.mongo_connector import mongo_db
 from backend.models.team import Team
 
 router = APIRouter(prefix="/teams", tags=["Teams"])
+
+@router.get("/")
+def list_teams():
+    return [{"id": 1, "name": "Team A"}]
 
 @router.post("/")
 def create_team(team: Team):
@@ -31,3 +36,4 @@ def delete_team(team_id: int):
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Team not found.")
     return {"message": "Team deleted."}
+

@@ -1,5 +1,5 @@
 # Vibe-Fanalyze 🎧📊
-A multi-sport analytics and prediction assistant for fans, fantasy players, and stat lovers. Supports NFL, NBA, MLB, WNBA, UFC, NHL, and MLS
+A multi-sport analytics with chatbot API using FastAPI, MySQL, and MongoDB. and prediction assistant for fans, fantasy players, and stat lovers. Supports NFL, NBA, MLB, WNBA, UFC, NHL, and MLS
 
 Vibe-Fanalyze is a smart multi-sport analytics and prediction assistant for fantasy managers, sports bettors, and stat junkies. It supports:
 - 🏈 NFL
@@ -48,6 +48,47 @@ _See the repo for detailed layout and code organization._
 ## 📌 License
 MIT License
 
----
-
 Let’s build something fans *vibe* with.
+
+# Vibe-Fanalyze Project Code Base
+
+## Project Structure
+Vibe-Fanalyze/
+├── .vscode/
+│   └── launch.json
+│
+├── app/                        # Main application code
+│   ├── __init__.py
+│   ├── main.py                 # App entry point
+│   ├── config/
+│   │   └── settings.py
+│   ├── db/
+│   │   ├── mysql_connector.py
+│   │   └── mongodb_connector.py
+│   ├── models/
+│   │   ├── player.py
+│   │   ├── team.py
+│   │   └── game.py
+│   ├── routes/
+│   │   ├── stats.py
+│   │   ├── fantasy.py
+│   │   ├── games.py
+│   │   ├── players.py
+│   │   └── teams.py
+│   └── services/
+│       └── fantasy_points.py
+│
+├── data/
+│   ├── mysql/
+│   │   └── init.sql
+│   └── mongodb/
+│       └── sample_data.json
+│
+├── scripts/                    # Seeding or utility scripts
+│   ├── mysql_seed.py
+│   └── mongodb_seed.py
+│
+├── requirements.txt
+├── README.md
+└── .gitignore
+

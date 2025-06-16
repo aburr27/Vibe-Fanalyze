@@ -10,6 +10,12 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE leagues (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    sport_type VARCHAR(50)
+);
+
 CREATE TABLE IF NOT EXISTS favorites (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -17,3 +23,6 @@ CREATE TABLE IF NOT EXISTS favorites (
     reference_id INT,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+
+

@@ -1,10 +1,11 @@
 # Core
 fastapi
 uvicorn
+pymysql
 pymongo
 mysql-connector-python
 python-dotenv
-pymysql
+
 
 # NLP and ML (optional for later)
 spacy
@@ -16,4 +17,5 @@ numpy
 requests
 
 # Dev tools
-jupyter
+Jupyter
+

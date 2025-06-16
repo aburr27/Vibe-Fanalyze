@@ -21,3 +21,4 @@ MYSQL_URL = f"mysql+mysqlconnector://{MYSQL_USER}:{MYSQL_PASSWORD_ENCODED}@{MYSQ
 # MongoDB Settings
 MONGO_URL = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
 
+

@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import Optional, Dict
 from uuid import UUID
 

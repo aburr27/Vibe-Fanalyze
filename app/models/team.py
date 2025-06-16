@@ -1,4 +1,6 @@
 from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import BaseModel
 from typing import Optional
 
 class Team(BaseModel):
@@ -18,4 +20,3 @@ class Team(BaseModel):
                 "league": "NBA"
             }
         }
-
