@@ -1,0 +1,86 @@
+{
+  "chat_logs": [
+    {
+      "user_id": "acebvibes_001",
+      "timestamp": "2025-06-27T14:35:00Z",
+      "messages": [
+        { "from": "user", "text": "Who’s winning the NBA finals?" },
+        { "from": "assistant", "text": "The Celtics are leading the series 3–2." }
+      ],
+      "context": {
+        "sport": "NBA",
+        "intent": "game_outcome",
+        "session_id": "uuid-session-string"
+      }
+    }
+  ],
+
+  "predictions": [
+    {
+      "model": "xgb_v1.3_nba",
+      "generated_at": "2025-06-27T13:00:00Z",
+      "game_id": 12345,
+      "sport": "NBA",
+      "home_team": "BOS",
+      "away_team": "DAL",
+      "prediction": {
+        "winner": "BOS",
+        "confidence": 0.72,
+        "spread": -4.5,
+        "over_under": 210.5
+      },
+      "features": {
+        "pace": 101.2,
+        "off_rating_home": 114.5,
+        "off_rating_away": 112.2,
+        "injuries": 2
+      }
+    }
+  ],
+
+  "raw_event_data": [
+    {
+      "source": "sportradar",
+      "sport": "NFL",
+      "game_id": 9876,
+      "raw_payload": {
+        "quarter": 2,
+        "timestamp": "2025-09-10T01:15:00Z",
+        "event": "touchdown",
+        "description": "Mahomes 35-yard TD pass to Kelce"
+      },
+      "ingested_at": "2025-09-10T01:16:01Z"
+    }
+  ],
+
+  "user_profiles": [
+    {
+      "user_id": "acebvibes_001",
+      "name": "Ace",
+      "favorite_teams": ["HOU", "LAL", "DAL"],
+      "preferred_sports": ["NBA", "NFL"],
+      "notification_settings": {
+        "game_reminders": true,
+        "daily_predictions": false
+      }
+    }
+  ],
+
+  "fantasy_snapshots": [
+    {
+      "game_id": 2222,
+      "sport": "WNBA",
+      "player_id": 789,
+      "player_name": "A'ja Wilson",
+      "fantasy_points": 48.3,
+      "scoring_system": "DraftKings",
+      "stat_line": {
+        "points": 28,
+        "rebounds": 11,
+        "blocks": 3,
+        "turnovers": 2
+      },
+      "calculated_at": "2025-06-27T15:10:00Z"
+    }
+  ]
+}
