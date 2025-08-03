@@ -1,5 +1,5 @@
 # Vibe-Fanalyze 🎧📊
-A multi-sport analytics with chatbot API using FastAPI, MySQL, and MongoDB. and prediction assistant for fans, fantasy players, and stat lovers. Supports NFL, NBA, MLB, WNBA, UFC, NHL, and MLS
+A multi-sport analytics with chatbot API using FastAPI, MySQL, and MongoDB. And a prediction assistant for fans, fantasy players, and stat lovers. Supports NFL, NBA, MLB, WNBA, UFC, NHL, and MLS
 
 Vibe-Fanalyze is a smart multi-sport analytics and prediction assistant for fantasy managers, sports bettors, and stat junkies. It supports:
 - 🏈 NFL
@@ -11,20 +11,20 @@ Vibe-Fanalyze is a smart multi-sport analytics and prediction assistant for fant
 - ⚽ MLS
 
 ## 🎯 Features
-- Player stats lookup
-- Team comparisons
-- Game schedule queries
-- Win/loss predictions
-- Fantasy points calculator
-- Add/edit/delete sports data
-- Chat-like natural language interface
-- Betting odds integration
+- 🔍 Player & team stat lookups
+- 📊 Team comparisons
+- 🗓️ Game schedule queries
+- 🔮 Win/loss predictions
+- 🧮 Fantasy points calculator
+- ✏️ Add/edit/delete sports data
+- 💬 Chat-like interface for natural queries
+- 💸 Sports betting odds integration
 
 ## ⚙️ Tech Stack
 - **Backend:** Python (FastAPI or Flask)
-- **Database:** MySQL + MongoDB
-- **Data Sources:** TheSportsDB, The-Odds-API, etc.
-- **Version Control:** GitHub
+- **Database:** MySQL (structured) + MongoDB (flexible data)
+- **Data Sources:** TheSportsDB, The Odds API, and more
+- **Version Control:** Git + GitHub
 
 ## 🚀 Getting Started
 1. Clone the repo  
@@ -42,53 +42,56 @@ Vibe-Fanalyze is a smart multi-sport analytics and prediction assistant for fant
 5. Run the server  
    `python backend/app.py` or `uvicorn backend.app:app --reload`
 
-## 📂 Folder Structure
-_See the repo for detailed layout and code organization._
-
-## 📌 License
-MIT License
-
-Let’s build something fans *vibe* with.
-
-# Vibe-Fanalyze Project Code Base
-
-## Project Structure
+## 📂 Project Structure
 Vibe-Fanalyze/
-├── .vscode/
-│   └── launch.json
-│
-├── app/                        # Main application code
-│   ├── __init__.py
-│   ├── main.py                 # App entry point
-│   ├── config/
-│   │   └── settings.py
-│   ├── db/
-│   │   ├── mysql_connector.py
-│   │   └── mongodb_connector.py
-│   ├── models/
+├── .vscode/                 # IDE configurations
+│    └── launch.json
+├── app/                     # Core application
+│   ├── app.py               # FastAPI app instance (create_app)
+│   ├── main.py              # Entry point (runs app)
+│   ├── config/              # App settings/config
+│   │    └── settings.py      # Environment/configuration management
+│   ├── db/                  # DB connectors (MySQL/Mongo)
+│   │  ├── mysql_connector.py
+│   │  └── mongodb_connector.py
+│   ├── models/              # DB models (SQLAlchemy or ODM)
 │   │   ├── player.py
 │   │   ├── team.py
 │   │   └── game.py
-│   ├── routes/
+│   ├── schemas/             # Pydantic schemas
+│   ├── routes/              # API endpoints - FastAPI route handlers
 │   │   ├── stats.py
 │   │   ├── fantasy.py
 │   │   ├── games.py
 │   │   ├── players.py
 │   │   └── teams.py
-│   └── services/
+│   ├── services/            # Business logic
 │       └── fantasy_points.py
-│
-├── data/
+│   └── utils/               # Helper functions (optional)
+│      └── formatter.py
+├── data/                    # Raw/static data
 │   ├── mysql/
-│   │   └── init.sql
+│      └── init.sql
 │   └── mongodb/
 │       └── sample_data.json
-│
-├── scripts/                    # Seeding or utility scripts
+├── scripts/                 # Seeders & CLI tools
 │   ├── mysql_seed.py
 │   └── mongodb_seed.py
-│
-├── requirements.txt
+├── tests/                   # Unit/integration tests
+│   ├──conftest.py
+│   ├──test_players.py
+│   ├── test_teams.py
+├── .env                     # Local environment config
+├── Dockerfile               # Container setup
+├── requirements.txt         # Python dependencies
 ├── README.md
+├── .dockerignore
+├── games.stat.json
+├── LICENSE
 └── .gitignore
+└── ...                      # Other config and metadata files
 
+## 📌 License
+MIT License
+
+Let’s build something fans *vibe* with.
