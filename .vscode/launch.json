@@ -5,17 +5,9 @@
       "name": "🚀 Vibe-Fanalyze (FastAPI)",
       "type": "python",
       "request": "launch",
-      "module": "uvicorn",
-      "args": [
-        "main:app",
-        "--reload",
-        "--host", "127.0.0.1",
-        "--port", "8000"
-      ],
-      "jinja": true,
-      "envFile": "${workspaceFolder}/.env",
       "program": "app/main.py",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "justMyCode": true
     }
   ]
 }
