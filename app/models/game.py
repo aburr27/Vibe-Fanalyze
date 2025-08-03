@@ -1,7 +1,5 @@
-from pydantic import BaseModel, Field
-from pydantic import BaseModel
-from typing import Optional, Dict
-from datetime import datetime
+from sqlalchemy import Column, Integer, String, DateTime
+from .player import Base
 
 class Game(BaseModel):
     id: int

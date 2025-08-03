@@ -1,7 +1,7 @@
-from pydantic import BaseModel, Field
-from pydantic import BaseModel
-from typing import Optional, Dict
-from uuid import UUID
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
 
 class Player(BaseModel):
     id: Optional[int] = Field(None, description="Unique player ID (for SQL)")

@@ -1,7 +1,5 @@
-from pydantic import BaseModel, Field
-from pydantic import BaseModel
-from pydantic import BaseModel
-from typing import Optional
+from sqlalchemy import Column, Integer, String
+from .player import Base
 
 class Team(BaseModel):
     id: Optional[int] = Field(None, description="Unique team ID (for SQL)")

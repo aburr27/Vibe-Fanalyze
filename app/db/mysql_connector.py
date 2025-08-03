@@ -1,5 +1,9 @@
-import pymysql
-from backend.config import settings
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from app.config.settings import settings
+
+engine = create_engine(settings.MYSQL_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_mysql_connection():
     return pymysql.connect(
