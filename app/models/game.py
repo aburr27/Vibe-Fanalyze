@@ -1,13 +1,18 @@
-from sqlalchemy import Column, Integer, String, DateTime
-from .player import Base
+from beanie import Document
+from typing import Optional, Dict
+from datetime import datetime
 
-class Game(BaseModel):
-    id: int
-    home_team: str
-    away_team: str
-    league: str
+class Game(Document):
+    sport: str
+    game_id: int
+    season: int
+    week: Optional[int] = None
     date: datetime
-    stats: Optional[Dict] = Field(default_factory=dict)
-    result: Optional[str] = None  # e.g. "home_win", "away_win", "draw"
+    home_team_id: int
+    away_team_id: int
+    status: str  # scheduled | live | finished
+    score: Optional[Dict[str, int]] = None
+    betting: Optional[Dict] = None
 
-
+    class Settings:
+        name = "games"

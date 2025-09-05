@@ -5,6 +5,8 @@ pymysql
 pymongo
 mysql-connector-python
 python-dotenv
+pydantic
+SQLAlchemy
 
 
 # NLP and ML (optional for later)
@@ -12,6 +14,7 @@ spacy
 scikit-learn
 pandas
 numpy
+alembic
 
 # API & Requests
 requests

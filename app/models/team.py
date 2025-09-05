@@ -1,20 +1,22 @@
-from sqlalchemy import Column, Integer, String
-from .player import Base
+from beanie import Document
+from pydantic import BaseModel
+from typing import Optional, Dict
 
-class Team(BaseModel):
-    id: Optional[int] = Field(None, description="Unique team ID (for SQL)")
-    mongo_id: Optional[str] = Field(None, alias="_id", description="MongoDB document ID")
+class Stadium(BaseModel):
     name: str
-    city: str
-    league: str
+    capacity: Optional[int] = None
 
-    class Config:
-        allow_population_by_field_name = True
-        schema_extra = {
-            "example": {
-                "id": 1,
-                "name": "Warriors",
-                "city": "San Francisco",
-                "league": "NBA"
-            }
-        }
+class Team(Document):
+    sport: str
+    team_id: int
+    name: str
+    abbreviation: str
+    city: str
+    conference: Optional[str] = None
+    division: Optional[str] = None
+    founded: Optional[int] = None
+    stadium: Optional[Stadium] = None
+
+    class Settings:
+        name = "teams"
+

@@ -1,28 +1,17 @@
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
+from beanie import Document
+from typing import Optional, Dict
 
-Base = declarative_base()
-
-class Player(BaseModel):
-    id: Optional[int] = Field(None, description="Unique player ID (for SQL)")
-    mongo_id: Optional[str] = Field(None, alias="_id", description="MongoDB document ID")
+class Player(Document):
+    sport: str
+    player_id: int
+    team_id: int
     name: str
-    team: str
-    position: str
-    stats: Optional[Dict[str, float]] = Field(default_factory=dict)
+    position: Optional[str] = None
+    height: Optional[str] = None
+    weight: Optional[int] = None
+    birthdate: Optional[str] = None
+    college: Optional[str] = None
+    stats: Optional[Dict] = None  # nested career/season stats
 
-    class Config:
-        allow_population_by_field_name = True
-        schema_extra = {
-            "example": {
-                "id": 23,
-                "name": "LeBron James",
-                "team": "Los Angeles Lakers",
-                "position": "SF",
-                "stats": {
-                    "points": 28.7,
-                    "rebounds": 7.5,
-                    "assists": 6.9
-                }
-            }
-        }
+    class Settings:
+        name = "players"
