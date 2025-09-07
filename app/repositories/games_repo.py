@@ -1,20 +1,20 @@
-from app.db.mysql_connector import mysql_conn
-from app.db.mongo_connector import mongo_client
-from app.models.games import Game
+from app.repositories.mysql_repo import MySQLRepo
+from app.repositories.mongo_repo import MongoRepo
 
-betting_collection = mongo_client['vibe_fanalyze_db']['betting']
+class GamesRepo:
+    def __init__(self):
+        self.mysql = MySQLRepo()
+        self.mongo = MongoRepo()
 
-def get_game(sport: str, game_id: int):
-    cursor = mysql_conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM games WHERE sport=%s AND id=%s", (sport.lower(), game_id))
-    game_row = cursor.fetchone()
-    cursor.close()
-    
-    if game_row:
-        game = Game(**game_row)
-        # Fetch betting data from Mongo
-        bet_doc = betting_collection.find_one({"sport": sport.lower(), "game_id": game_id})
-        if bet_doc:
-            game.bet = bet_doc  # optional field in Game model
-        return game.dict()
-    return None
+    def list_games_by_sport(self, sport: str) -> list[dict]:
+        query = """
+            SELECT g.*, s.name as sport_name
+            FROM games g
+            JOIN sports s ON g.sport_id = s.id
+            WHERE LOWER(s.name) = %s
+        """
+        return self.mysql.fetch_all(query, (sport.lower(),))
+
+    def get_game_by_id(self, game_id: int) -> dict | None:
+        query = "SELECT * FROM games WHERE id = %s"
+        return self.mysql.fetch_one(query, (game_id,))

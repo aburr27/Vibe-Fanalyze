@@ -1,10 +1,11 @@
-from app.db.mongo_connector import mongo_client
-from app.models.fantasy import Fantasy
+# app/services/fantasy_services.py
+from typing import Optional
+from app.repositories.mongo_repo import FantasyRepository
 
-fantasy_collection = mongo_client['vibe_fanalyze_db']['fantasy']
 
-def get_fantasy(sport: str):
-    doc = fantasy_collection.find_one({"sport": sport.lower()})
-    if doc:
-        return Fantasy(**doc).dict()
-    return {}
+async def get_fantasy(sport: str, player_id: int) -> Optional[dict]:
+    """
+    Get fantasy stats for a player in a given sport.
+    """
+    doc = await FantasyRepository.get_for_player(player_id, sport)
+    return doc.dict() if doc else {}

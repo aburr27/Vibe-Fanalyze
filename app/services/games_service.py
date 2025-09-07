@@ -1,34 +1,26 @@
-from app.db.mysql_connector import mysql_conn
-from app.db.mongo_connector import mongo_client
-from app.models.games import Game
+# app/services/games_services.py
+from typing import List, Optional
+from app.repositories.mysql_repo import GamesRepository
+from app.repositories.mongo_repo import BettingRepository
+from app.models.game import Game
 
-betting_collection = mongo_client['vibe_fanalyze_db']['betting']
-
-def get_games(sport: str):
-    cursor = mysql_conn.cursor(dictionary=True)
-    cursor.execute("""
-        SELECT games.* FROM games
-        JOIN sports ON games.sport_id = sports.id
-        WHERE LOWER(sports.name) = %s
-    """, (sport.lower(),))
-    rows = cursor.fetchall()
-    cursor.close()
+def get_games(sport: str) -> List[dict]:
+    """
+    Fetch all games for a sport from MySQL.
+    """
+    rows = GamesRepository.get_games(sport)
     return [Game(**row).dict() for row in rows]
 
-def get_game(sport: str, game_id: int):
-    cursor = mysql_conn.cursor(dictionary=True)
-    cursor.execute("""
-        SELECT games.* FROM games
-        JOIN sports ON games.sport_id = sports.id
-        WHERE LOWER(sports.name) = %s AND games.id = %s
-    """, (sport.lower(), game_id))
-    row = cursor.fetchone()
-    cursor.close()
+
+async def get_game(sport: str, game_id: int) -> Optional[dict]:
+    """
+    Fetch a single game by ID from MySQL and enrich with betting from Mongo.
+    """
+    row = GamesRepository.get_game_by_id(game_id, sport)
     if row:
         game = Game(**row)
-        # Add betting info from Mongo
-        bet_doc = betting_collection.find_one({"sport": sport.lower(), "game_id": game_id})
-        if bet_doc:
-            game.bet = bet_doc  # optional field in Game model
+        bet_docs = await BettingRepository.get_for_game(sport, game_id)
+        if bet_docs:
+            game.betting = [b.dict() for b in bet_docs]
         return game.dict()
     return None

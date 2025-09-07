@@ -1,6 +1,7 @@
+# app/config/prod.py
 from .base import Settings
 
 class ProdSettings(Settings):
-environment: str = "production"
+    ENVIRONMENT: str = "production"
 
 prod_settings = ProdSettings()

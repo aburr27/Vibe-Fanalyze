@@ -1,6 +1,7 @@
+# app/config/dev.py
 from .base import Settings
 
 class DevSettings(Settings):
-environment: str = "development"
+    ENVIRONMENT: str = "development"
 
 dev_settings = DevSettings()

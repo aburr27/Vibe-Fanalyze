@@ -1,47 +1,12 @@
-from fastapi import APIRouter, HTTPException
 from fastapi import APIRouter
-from app.db.mongo_connector import mongo_db
-from app.models.game import Game
-# app/routes/games.py
+from app.services.games_services import get_games, get_game
 
-router = APIRouter(prefix="/games", tags=["Games"])
-
-GAME_NOT_FOUND_MSG = "Game not found."
+router = APIRouter(prefix="/mlb/games", tags=["MLB Games"])
 
 @router.get("/")
-def list_games():
-    return [{"game_id": 1, "home": "Team A", "away": "Team B"}]
+def fetch_mlb_games():
+    return get_games("mlb")
 
-# Create
-@router.post("/")
-def create_game(game: Game):
-    if mongo_db.games.find_one({"id": game.id}):
-        raise HTTPException(status_code=400, detail="Game already exists.")
-    mongo_db.games.insert_one(game.dict())
-    return {"message": "Game created."}
-
-# Read
 @router.get("/{game_id}")
-def get_game(game_id: int):
-    game = mongo_db.games.find_one({"id": game_id})
-    if not game:
-        raise HTTPException(status_code=404, detail=GAME_NOT_FOUND_MSG)
-    return game
-
-# Update
-@router.put("/{game_id}")
-def update_game(game_id: int, updated: Game):
-    result = mongo_db.games.update_one({"id": game_id}, {"$set": updated.dict()})
-    if result.matched_count == 0:
-        raise HTTPException(status_code=404, detail=GAME_NOT_FOUND_MSG)
-    return {"message": "Game updated."}
-
-# Delete
-@router.delete("/{game_id}")
-def delete_game(game_id: int):
-    result = mongo_db.games.delete_one({"id": game_id})
-    if result.deleted_count == 0:
-        raise HTTPException(status_code=404, detail=GAME_NOT_FOUND_MSG)
-    return {"message": "Game deleted."}
-
-
+async def fetch_mlb_game(game_id: int):
+    return await get_game("mlb", game_id)

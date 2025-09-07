@@ -1,20 +1,12 @@
 from fastapi import APIRouter
-from app.services.games_service import get_games, get_game
-from app.services.betting_service import get_betting
+from app.services.games_services import get_games, get_game
 
 router = APIRouter(prefix="/nba/games", tags=["NBA Games"])
 
 @router.get("/")
-def read_games():
-    return {"games": get_games("nba")}
+def fetch_nba_games():
+    return get_games("nba")
 
 @router.get("/{game_id}")
-def read_game(game_id: int):
-    game = get_game("nba", game_id)
-    if not game:
-        return {"error": "Game not found"}
-    return game
-
-@router.get("/{game_id}/betting")
-def read_betting(game_id: int):
-    return get_betting("nba", game_id)
+async def fetch_nba_game(game_id: int):
+    return await get_game("nba", game_id)

@@ -1,13 +1,15 @@
+# app/db/mysql_connector.py
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import pymysql
 from app.config.settings import settings
+# from app.db.mysql_connector import get_mysql_connection
 
-# SQLAlchemy engine
-engine = create_engine(settings.MYSQL_URL)
+# SQLAlchemy engine for ORM queries
+engine = create_engine(settings.MYSQL_URL, future=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Raw PyMySQL connection
+# Raw PyMySQL connection for direct SQL queries
 def get_mysql_connection():
     return pymysql.connect(
         host=settings.MYSQL_HOST,
@@ -18,3 +20,9 @@ def get_mysql_connection():
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor
     )
+# Example usage (remove or move to a test script before production):
+# conn = get_mysql_connection()
+# cursor = conn.cursor()
+# cursor.execute("SELECT * FROM users LIMIT 1")
+# print(cursor.fetchone())
+# conn.close()

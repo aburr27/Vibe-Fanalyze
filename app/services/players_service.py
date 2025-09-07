@@ -1,16 +1,19 @@
-from app.db.mongo_connector import mongo_client
-from app.db.mysql_connector import mysql_conn
-from app.models.players import Player
+# app/services/players_services.py
+from typing import List, Optional
+from app.repositories.mongo_repo import PlayerRepository
 
-players_collection = mongo_client['vibe_fanalyze_db']['players']
 
-def get_players(sport: str):
-    # MongoDB fetch
-    docs = players_collection.find({"sport": sport.lower()})
-    return [Player(**doc).dict() for doc in docs]
+async def get_players(sport: str) -> List[dict]:
+    """
+    Fetch all players for a given sport from MongoDB.
+    """
+    docs = await PlayerRepository.get_all(sport)
+    return [p.dict() for p in docs]
 
-def get_player_by_id(player_id: int, sport: str):
-    doc = players_collection.find_one({"id": player_id, "sport": sport.lower()})
-    if doc:
-        return Player(**doc).dict()
-    return None
+
+async def get_player_by_id(player_id: int, sport: str) -> Optional[dict]:
+    """
+    Fetch a single player by ID from MongoDB.
+    """
+    doc = await PlayerRepository.get_by_id(player_id, sport)
+    return doc.dict() if doc else None

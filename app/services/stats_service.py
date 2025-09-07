@@ -1,10 +1,11 @@
-from app.db.mongo_connector import mongo_client
-from app.models.stats import Stat
+# app/services/stats_services.py
+from typing import List
+from app.repositories.mongo_repo import StatsRepository
 
-stats_collection = mongo_client['vibe_fanalyze_db']['stats']
 
-def get_stats(sport: str):
-    doc = stats_collection.find_one({"sport": sport.lower()})
-    if doc:
-        return Stat(**doc).dict()
-    return {}
+async def get_stats(sport: str, game_id: int) -> List[dict]:
+    """
+    Fetch all player stats for a given game from MongoDB.
+    """
+    docs = await StatsRepository.get_for_game(sport, game_id)
+    return [s.dict() for s in docs]

@@ -1,26 +1,8 @@
-from fastapi import APIRouter, HTTPException
 from fastapi import APIRouter
-# Update the import path below if the actual location of mongo_connector is different
-from app.db.mongo_connector import mongo_db
-from ...utils.fantasy_points import calculate_fantasy_points
-from app.models.player import Player
+from app.services.stats_services import get_stats
 
-router = APIRouter(prefix="/stats", tags=["Stats"])
+router = APIRouter(prefix="/mlb/stats", tags=["MLB Stats"])
 
-@router.get("/player/{player_id}", response_model=dict)
-def get_player_stats(player_id: int):
-    player = mongo_db.players.find_one({"player_id": player_id})
-    if not player:
-        raise HTTPException(status_code=404, detail="Player not found")
-    
-    stats = player.get("stats", {})
-    fantasy_score = calculate_fantasy_points(stats, league="MLB")
-    
-    return {
-        "player_id": player_id,
-        "name": player.get("name", ""),
-        "team": player.get("team", ""),
-        "position": player.get("position", ""),
-        "stats": stats,
-        "fantasy_points": round(fantasy_score, 2)
-    }
+@router.get("/{game_id}")
+async def fetch_mlb_stats(game_id: int):
+    return await get_stats("mlb", game_id)

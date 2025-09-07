@@ -1,6 +1,6 @@
 from beanie import Document
 from pydantic import BaseModel
-from typing import Optional, Dict
+from typing import Optional
 
 class Stadium(BaseModel):
     name: str
@@ -9,6 +9,7 @@ class Stadium(BaseModel):
 class Team(Document):
     sport: str
     team_id: int
+    mysql_team_id: Optional[int] = None  # MySQL reference
     name: str
     abbreviation: str
     city: str
@@ -19,4 +20,5 @@ class Team(Document):
 
     class Settings:
         name = "teams"
+
 

@@ -1,9 +1,12 @@
 # main.py
 from fastapi import FastAPI
-from app.routes import fantasy, games, players
-from app.db.mongo_connector import init_db
+from app.routes import fantasy, games, players 
+from app.db.mongo_connector import init_db as init_mongo
 from dotenv import load_dotenv
 import os
+import importlib
+import pkgutil
+from app.db.mysql_connector import get_mysql_connection
 
 # Load environment variables from .env
 load_dotenv()
@@ -20,19 +23,37 @@ app = FastAPI(
     description="🏈🏀⚾ A multi-sport platform for fantasy analysis, player tracking, and game predictions."
 )
 
+# Dynamically include all routers from app/routes/*
+def include_routers():
+    package = "app.routes"
+
+    # Walk through all subpackages (nba, nfl, mlb, etc.)
+    for _, sport_name, is_pkg in pkgutil.iter_modules([package.replace(".", "/")]):
+        if is_pkg:
+            sport_package = f"{package}.{sport_name}"
+            # Scan inside each sport folder (games_routes, players_routes, etc.)
+            for _, module_name, _ in pkgutil.iter_modules([f"{package.replace('.', '/')}/{sport_name}"]):
+                module_path = f"{sport_package}.{module_name}"
+                module = importlib.import_module(module_path)
+                if hasattr(module, "router"):
+                    app.include_router(module.router)
+
+
 @app.on_event("startup")
-async def start_db():
-    await init_db()
+async def startup_event():
+    # Init MongoDB (Beanie models)
+    await init_mongo()
 
-@app.get("/teams/{sport}")
-async def get_teams(sport: str):
-    from app.models.team import Team
-    return await Team.find(Team.sport == sport).to_list()
+    # Test MySQL connection (raises if bad config)
+    conn = get_mysql_connection()
+    conn.close()
 
-# Root/health check
-@app.get("/", tags=["Health Check"])
+    # Register all sport-specific routers
+    include_routers()
+
+@app.get("/")
 def root():
-    return {"message": "✅ Vibe-Fanalyze is live!"}
+    return {"status": "ok", "message": "Vibe-Fanalyze API is running 🚀"}
 
 # Register routers
 # NFL routes (focus)
