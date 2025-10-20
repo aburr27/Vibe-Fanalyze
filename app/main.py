@@ -3,10 +3,48 @@ from fastapi import FastAPI
 from app.routes import fantasy, games, players 
 from app.db.mongo_connector import init_db as init_mongo
 from dotenv import load_dotenv
+from app import vibebot
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from app.db.mysql_connector import get_mysql_connection
+from app.routes import chat_routes, vibebot
 import os
 import importlib
 import pkgutil
-from app.db.mysql_connector import get_mysql_connection
+
+app = FastAPI(title="Vibe-Fanalyze Dashboard")
+
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
+app.include_router(chat_routes.router)
+app.include_router(vibebot.router)
+
+app = FastAPI(title="Vibe-Fanalyze Analytics Dashboard")
+
+# Include routes
+app.include_router(vibebot.router, prefix="/api", tags=["VibeBot"])
+
+# Static and templates setup
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+templates = Jinja2Templates(directory="app/templates")
+
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("chat.html", {"request": request})
+
+app = FastAPI(title="Vibe-Fanalyze Sports Analytics")
+
+# Routers
+app.include_router(vibebot.router, prefix="/api", tags=["VibeBot"])
+
+# Serve templates
+templates = Jinja2Templates(directory="app/templates")
+
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("chat.html", {"request": request})
 
 # Load environment variables from .env
 load_dotenv()
@@ -27,7 +65,7 @@ app = FastAPI(
 def include_routers():
     package = "app.routes"
 
-    # Walk through all subpackages (nba, nfl, mlb, etc.)
+    # Walk through all sub packages (nba, nfl, mlb, etc.)
     for _, sport_name, is_pkg in pkgutil.iter_modules([package.replace(".", "/")]):
         if is_pkg:
             sport_package = f"{package}.{sport_name}"

@@ -28,6 +28,13 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+.ipynb_checkpoints/
+*.csv
+*.log
+*.pyc
+*.log
+.DS_Store
+/data/*.csv
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
